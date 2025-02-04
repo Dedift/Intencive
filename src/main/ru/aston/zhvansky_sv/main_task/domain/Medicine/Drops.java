@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Drops extends Medicine {
 
-    int volume;
+    private int volume;
 
     public Drops(String name, double price, boolean needRecipe, String activeSubstance, int volume) {
         super(name, price, needRecipe, activeSubstance);

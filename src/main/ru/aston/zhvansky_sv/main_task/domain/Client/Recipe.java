@@ -19,15 +19,11 @@ public class Recipe {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Medicine getPill() {
+    public Medicine getMedicine() {
         return medicine;
     }
 
-    public void setPill(Medicine medicine) {
+    public void setMedicine(Medicine medicine) {
         this.medicine = medicine;
     }
 

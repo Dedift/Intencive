@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Pill extends Medicine{
 
-    int numberPillsInPackage;
+    private int numberPillsInPackage;
 
     public Pill(String name, double price, boolean needRecipe, String activeSubstance, int numberPillsInPackage) {
         super(name, price, needRecipe, activeSubstance);

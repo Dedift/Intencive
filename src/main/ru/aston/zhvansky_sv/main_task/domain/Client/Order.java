@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class Order {
 
+    public static final double ZERO = 0.0;
     private ArrayList<Medicine> medicines;
     private User user;
 
@@ -17,7 +18,7 @@ public class Order {
     }
 
     public double getPriceOfPills(){
-        double sum = 0.0;
+        double sum = ZERO;
         for (Medicine medicine : medicines){
             sum += medicine.getPrice();
         }
@@ -26,10 +27,6 @@ public class Order {
 
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public ArrayList<Medicine> getMedicines() {
