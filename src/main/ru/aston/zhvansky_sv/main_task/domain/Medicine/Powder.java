@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Powder extends Medicine{
 
-    int numberSetsInPackage;
+    private int numberSetsInPackage;
 
     public Powder(String name, double price, boolean needRecipe, String activeSubstance, int numberSetsInPackage) {
         super(name, price, needRecipe, activeSubstance);

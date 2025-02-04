@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Cream extends Medicine{
 
-    int volume;
+    private int volume;
 
     public Cream(String name, double price, boolean needRecipe, String activeSubstance, int volume) {
         super(name, price, needRecipe, activeSubstance);
