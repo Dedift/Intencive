@@ -8,14 +8,15 @@ import java.util.Comparator;
 
 public final class OrdersHistory {
 
-    public static ArrayList<Order> allOrders = new ArrayList<>();
+    private static ArrayList<Order> allOrders = new ArrayList<>();
 
     private OrdersHistory() {
     }
 
     public static ArrayList<Order> getSortedOrders() {
-        allOrders.sort(Comparator.comparing(o -> o.getUser().getSurName()));
-        return allOrders;
+        ArrayList<Order> ordersForSort = allOrders;
+        ordersForSort.sort(Comparator.comparing(o -> o.getUser().getSurName()));
+        return ordersForSort;
     }
 
     public static ArrayList<Order> getAllOrders() {

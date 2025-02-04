@@ -49,19 +49,27 @@ public class User {
     }
 
     public Order createOrder(ArrayList<Medicine> medicines){
-        ArrayList<Medicine> legalMedicines = new ArrayList<>();
-        for (Medicine medicine : medicines) {
-            if (!medicine.isNeedRecipe() || this.recipes.contains(medicine)){
-                legalMedicines.add(medicine);
+        if(Objects.nonNull(medicines)) {
+            ArrayList<Medicine> legalMedicines = new ArrayList<>();
+            for (Medicine medicine : medicines) {
+                if (!medicine.isNeedRecipe() || this.recipes.contains(medicine)) {
+                    legalMedicines.add(medicine);
+                }
             }
+            Order order = new Order(legalMedicines, this);
+            OrdersHistory.getAllOrders().add(order);
+            return order;
+        } else {
+            Order order = new Order(new ArrayList<>(), this);
+            OrdersHistory.getAllOrders().add(order);
+            return order;
         }
-        Order order = new Order(legalMedicines, this);
-        OrdersHistory.allOrders.add(order);
-        return order;
     }
 
     public void payOrder(Order order){
-        money -= DiscountUtils.getPriceWithDiscount(order, this);
+        if (Objects.nonNull(order)) {
+            money -= DiscountUtils.getPriceWithDiscount(order, this);
+        }
     }
 
     public double getMoney() {

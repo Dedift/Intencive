@@ -2,10 +2,10 @@ package domain.Medicine;
 
 public abstract class Medicine {
 
-    private String name;
-    private double price;
-    private boolean needRecipe;
-    private String activeSubstance;
+    protected String name;
+    protected double price;
+    protected boolean needRecipe;
+    protected String activeSubstance;
 
     public Medicine(String name, double price, boolean needRecipe, String activeSubstance) {
         this.name = name;
