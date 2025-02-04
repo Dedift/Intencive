@@ -30,11 +30,11 @@ public class Recipe {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Recipe recipe)) return false;
-        return Objects.equals(user, recipe.user) && Objects.equals(medicine, recipe.medicine);
+        return Objects.equals(medicine, recipe.medicine);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, medicine);
+        return Objects.hashCode(medicine);
     }
 }

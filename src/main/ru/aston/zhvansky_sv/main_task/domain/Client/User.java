@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class User {
 
-    private ArrayList<Recipe> recipes;
+    private ArrayList<Recipe> recipes = new ArrayList<>();
     private Order order;
     private String name;
     private String surName;
@@ -52,7 +52,7 @@ public class User {
         if(Objects.nonNull(medicines)) {
             ArrayList<Medicine> legalMedicines = new ArrayList<>();
             for (Medicine medicine : medicines) {
-                if (!medicine.isNeedRecipe() || this.recipes.contains(medicine)) {
+                if (!medicine.isNeedRecipe() || this.recipes.contains(new Recipe(this, medicine))) {
                     legalMedicines.add(medicine);
                 }
             }
