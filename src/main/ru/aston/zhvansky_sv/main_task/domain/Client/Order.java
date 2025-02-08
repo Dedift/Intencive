@@ -36,7 +36,16 @@ public class Order {
      * @return The total price of the medicines in the order.
      */
     public double getPriceOfPills() {
-        double sum = medicines.stream().mapToDouble(Medicine::getPrice).sum();
+        if (medicines == null) {
+            log.debug("Medicines list is null, returning 0.0");
+            return 0.0;
+        }
+
+        double sum = medicines.stream()
+                .mapToDouble(Medicine::getPrice)
+                .peek(price -> log.debug("Processing medicine with price: {}", price))
+                .sum();
+
         log.debug("Calculated total price of medicines in order: {}", sum);
         return sum;
     }
