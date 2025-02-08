@@ -25,8 +25,8 @@ class OrdersHistoryTest {
         Powder powder = new Powder("TheraFlu", 20.4, false, "paracetamol", 10);
         Drops drops = new Drops("Artelac Splash", 31.43, false, "sodium hyaluronate", 10);
 
-        User firstUser = new User(null, null, "Lu", "Zhvanskaya", 29, null, Gender.FEMALE, 300.2);
-        User secondUser = new User(null, null, "Alina", "Plush", 19, PersonType.DEFAULT, Gender.FEMALE, 300.2);
+        User firstUser = new User(new ArrayList<>(), null, "Lu", "Zhvanskaya", 29, null, Gender.FEMALE, 300.2);
+        User secondUser = new User(new ArrayList<>(), null, "Alina", "Plush", 19, PersonType.DEFAULT, Gender.FEMALE, 300.2);
         firstUser.setRecipes(new ArrayList<>() {{
             add(new Recipe(firstUser, cream));
         }});

@@ -14,8 +14,8 @@ public abstract class Medicine {
 
     protected static final Logger log = LoggerFactory.getLogger(Medicine.class);
     protected String name;
-    protected double price;
-    protected boolean needRecipe;
+    protected Double price;
+    protected Boolean needRecipe;
     protected String activeSubstance;
 
     /**
@@ -26,7 +26,7 @@ public abstract class Medicine {
      * @param needRecipe      Indicates whether a prescription is required for this medicine.
      * @param activeSubstance The active substance in the medicine.
      */
-    public Medicine(String name, double price, boolean needRecipe, String activeSubstance) {
+    public Medicine(String name, Double price, Boolean needRecipe, String activeSubstance) {
         this.name = name;
         this.price = price;
         this.needRecipe = needRecipe;

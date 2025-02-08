@@ -25,7 +25,7 @@ class DiscountUtilsTest {
         Powder powder = new Powder("TheraFlu", 20.4, false, "paracetamol", 10);
         Drops drops = new Drops("Artelac Splash", 31.43, false, "sodium hyaluronate", 10);
 
-        this.user = new User(null, null, "Lu", "Zhvanskaya", 29, null, Gender.FEMALE, 300.2);
+        this.user = new User(new ArrayList<>(), null, "Lu", "Zhvanskaya", 29, null, Gender.FEMALE, 300.2);
         user.setRecipes(new ArrayList<>() {{
             add(new Recipe(user, cream));
         }});

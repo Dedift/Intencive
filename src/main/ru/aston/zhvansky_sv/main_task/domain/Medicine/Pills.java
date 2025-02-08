@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 public class Pills extends Medicine{
 
-    private int numberPillsInPackage;
+    private Integer numberPillsInPackage;
 
     /**
      * Constructs a new Pills instance.
@@ -19,7 +19,7 @@ public class Pills extends Medicine{
      * @param activeSubstance       The active substance in the pills.
      * @param numberPillsInPackage  The number of pills per pack.
      */
-    public Pills(String name, double price, boolean needRecipe, String activeSubstance, int numberPillsInPackage) {
+    public Pills(String name, Double price, Boolean needRecipe, String activeSubstance, Integer numberPillsInPackage) {
         super(name, price, needRecipe, activeSubstance);
         this.numberPillsInPackage = numberPillsInPackage;
     }

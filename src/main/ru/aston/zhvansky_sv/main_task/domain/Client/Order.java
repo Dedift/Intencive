@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import domain.Medicine.Medicine;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,9 +14,8 @@ import java.util.Objects;
  */
 public class Order {
 
-    public static final double ZERO = 0.0;
     private static final Logger log = LoggerFactory.getLogger(Order.class);
-    private ArrayList<Medicine> medicines = new ArrayList<>();
+    private List<Medicine> medicines;
     private User user;
 
     /**
@@ -25,7 +24,7 @@ public class Order {
      * @param medicines The list of medicines in the order.
      * @param user      The user who placed the order.
      */
-    public Order(ArrayList<Medicine> medicines, User user) {
+    public Order(List<Medicine> medicines, User user) {
         this.medicines = medicines;
         this.user = user;
         log.debug("Created new Order: user={}, number of medicines={}", user, medicines.size());
@@ -37,10 +36,7 @@ public class Order {
      * @return The total price of the medicines in the order.
      */
     public double getPriceOfPills() {
-        double sum = ZERO;
-        for (Medicine medicine : medicines) {
-            sum += medicine.getPrice();
-        }
+        double sum = medicines.stream().mapToDouble(Medicine::getPrice).sum();
         log.debug("Calculated total price of medicines in order: {}", sum);
         return sum;
     }
@@ -50,12 +46,12 @@ public class Order {
         return user;
     }
 
-    public ArrayList<Medicine> getMedicines() {
+    public List<Medicine> getMedicines() {
         log.debug("Getting list of medicines in order. Number of medicines: {}", medicines.size());
         return medicines;
     }
 
-    public void setMedicines(ArrayList<Medicine> medicines) {
+    public void setMedicines(List<Medicine> medicines) {
         log.debug("Setting list of medicines in order. Old size: {}, New size: {}", this.medicines.size(), medicines.size());
         this.medicines = medicines;
     }

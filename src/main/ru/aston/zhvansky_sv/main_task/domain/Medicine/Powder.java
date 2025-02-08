@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Powder extends Medicine{
 
     private static final Logger log = LoggerFactory.getLogger(Powder.class);
-    private int numberSachetsInPackage;
+    private Integer numberSachetsInPackage;
 
     /**
      * Constructs a new Powder instance.
@@ -23,7 +23,7 @@ public class Powder extends Medicine{
      * @param activeSubstance           The active substance in the powder.
      * @param numberSachetsInPackage    The number of sachets per pack.
      */
-    public Powder(String name, double price, boolean needRecipe, String activeSubstance, int numberSachetsInPackage) {
+    public Powder(String name, Double price, Boolean needRecipe, String activeSubstance, Integer numberSachetsInPackage) {
         super(name, price, needRecipe, activeSubstance);
         this.numberSachetsInPackage = numberSachetsInPackage;
     }

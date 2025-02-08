@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 public class Drops extends Medicine {
 
-    private int volume;
+    private Integer volume;
 
     /**
      * Constructs a new Drops instance.
@@ -19,7 +19,7 @@ public class Drops extends Medicine {
      * @param activeSubstance The active substance in the drops.
      * @param volume          The volume of the drops in milliliters (ml).
      */
-    public Drops(String name, double price, boolean needRecipe, String activeSubstance, int volume) {
+    public Drops(String name, Double price, Boolean needRecipe, String activeSubstance, Integer volume) {
         super(name, price, needRecipe, activeSubstance);
         this.volume = volume;
     }
