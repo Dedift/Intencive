@@ -8,6 +8,7 @@ import domain.Utils.DiscountUtils;
 import domain.Utils.OrdersHistory;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,14 +18,14 @@ import java.util.Objects;
 public class User {
 
     private static final Logger log = LoggerFactory.getLogger(User.class);
-    private ArrayList<Recipe> recipes = new ArrayList<>();
+    private List<Recipe> recipes;
     private Order order;
     private String name;
     private String surName;
-    private int age;
+    private Integer age;
     private PersonType personType;
     private Gender gender;
-    private double money;
+    private Double money;
 
     /**
      * Constructs a new User instance.
@@ -38,7 +39,7 @@ public class User {
      * @param gender        The gender of the user.
      * @param money         The amount of money the user has.
      */
-    public User(ArrayList<Recipe> recipes, Order order, String name, String surName, int age, PersonType personType, Gender gender, double money) {
+    public User(List<Recipe> recipes, Order order, String name, String surName, Integer age, PersonType personType, Gender gender, Double money) {
         this.recipes = recipes;
         this.order = order;
         this.name = name;
@@ -85,12 +86,7 @@ public class User {
      */
     public Order createOrder(ArrayList<Medicine> medicines){
         if(Objects.nonNull(medicines)) {
-            ArrayList<Medicine> legalMedicines = new ArrayList<>();
-            for (Medicine medicine : medicines) {
-                if (!medicine.isNeedRecipe() || this.recipes.contains(new Recipe(this, medicine))) {
-                    legalMedicines.add(medicine);
-                }
-            }
+            List<Medicine> legalMedicines = medicines.stream().filter(medicine -> !medicine.isNeedRecipe() || this.recipes.contains(new Recipe(this, medicine))).toList();
             Order order = new Order(legalMedicines, this);
             OrdersHistory.addOrder(order);
             log.debug("Created new Order for User: name={}, surName={}, number of medicines={}",
@@ -129,7 +125,7 @@ public class User {
         this.money = money;
     }
 
-    public ArrayList<Recipe> getRecipes() {
+    public List<Recipe> getRecipes() {
         log.debug("Getting recipes for User: name={}, surName={}, number of recipes={}",
                 name, surName, recipes.size());
         return recipes;

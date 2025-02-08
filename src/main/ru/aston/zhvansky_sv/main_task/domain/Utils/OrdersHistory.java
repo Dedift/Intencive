@@ -7,6 +7,7 @@ import domain.Client.Order;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Utility class for managing and retrieving order history.
@@ -15,7 +16,7 @@ import java.util.Comparator;
 public final class OrdersHistory {
 
     private static final Logger logger = LoggerFactory.getLogger(OrdersHistory.class);
-    private static final ArrayList<Order> allOrders = new ArrayList<>();
+    private static final List<Order> allOrders = new ArrayList<>();
 
     /**
      * Private constructor to prevent instantiation of the class.
@@ -45,9 +46,9 @@ public final class OrdersHistory {
      *
      * @return A sorted list of orders by user surname.
      */
-    public static ArrayList<Order> getSortedOrders() {
+    public static List<Order> getSortedOrders() {
         logger.debug("Sorting orders by user surname.");
-        ArrayList<Order> ordersForSort = new ArrayList<>(allOrders);
+        List<Order> ordersForSort = new ArrayList<>(allOrders);
         ordersForSort.sort(Comparator.comparing(o -> o.getUser().getSurName()));
         logger.info("Returned sorted list of orders. Total orders: {}", ordersForSort.size());
         return ordersForSort;
@@ -58,7 +59,7 @@ public final class OrdersHistory {
      *
      * @return A list of all orders.
      */
-    public static ArrayList<Order> getAllOrders() {
+    public static List<Order> getAllOrders() {
         logger.info("Returning all orders. Total orders: {}", allOrders.size());
         return allOrders;
     }
