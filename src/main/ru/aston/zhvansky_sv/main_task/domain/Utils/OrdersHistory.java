@@ -48,10 +48,12 @@ public final class OrdersHistory {
      */
     public static List<Order> getSortedOrders() {
         logger.debug("Sorting orders by user surname.");
-        List<Order> ordersForSort = new ArrayList<>(allOrders);
-        ordersForSort.sort(Comparator.comparing(o -> o.getUser().getSurName()));
-        logger.info("Returned sorted list of orders. Total orders: {}", ordersForSort.size());
-        return ordersForSort;
+        return allOrders.stream()
+                .sorted(Comparator.comparing(
+                        o -> o.getUser().getSurName()
+                ))
+                .peek(order -> logger.debug("Processed order: {}", order))
+                .toList();
     }
 
     /**

@@ -43,25 +43,29 @@ public final class DiscountUtils {
      */
     public static double getPriceWithDiscount(Order order, User user) {
         logger.debug("Calculating discount for order: {}, user: {}", order, user);
-
         if (Objects.isNull(order) || Objects.isNull(user) || order.getMedicines().isEmpty()) {
             logger.warn("Invalid input: order or user is null, or order has no medicines");
             return -1;
         }
-
         int countPills = order.getMedicines().size();
         double priceOfPills = order.getPriceOfPills();
         logger.debug("Count of pills: {}, Price of pills: {}", countPills, priceOfPills);
-
-        double discount = Math.min(countPills, MAX_COUNT_MEDICINE_FOR_SALE);
-        logger.debug("Initial discount: {}", discount);
-
-        discount += user.getPersonType().ADDITIONAL_DISCOUNT;
-        logger.debug("Additional discount applied. New discount: {}", discount);
-
+        if (priceOfPills == 0) {
+            logger.warn("Invalid price of pills: {}", priceOfPills);
+            return -1;
+        }
+        double discount = calculateDiscount(countPills, user);
+        logger.debug("Total discount: {}", discount);
         double finalPrice = priceOfPills * discount / ONE_HUNDRED;
         logger.info("Final price with discount: {}", finalPrice);
-
         return finalPrice;
+    }
+
+    private static double calculateDiscount(int countPills, User user) {
+        double discount = Math.min(countPills, MAX_COUNT_MEDICINE_FOR_SALE);
+        logger.debug("Initial discount: {}", discount);
+        discount += user.getPersonType().ADDITIONAL_DISCOUNT;
+        logger.debug("Additional discount applied. New discount: {}", discount);
+        return discount;
     }
 }
