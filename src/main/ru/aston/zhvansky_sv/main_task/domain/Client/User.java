@@ -63,19 +63,14 @@ public class User {
      * @param age       The age of the user.
      * @return          The calculated person type (e.g., DEFAULT, RETIREE).
      */
-    private PersonType calculatePersonType(Gender gender, int age){
-        switch (gender){
-            case MALE -> {
-                return age > 65 ? PersonType.RETIREE : PersonType.DEFAULT;
-            }
-            case FEMALE -> {
-                return age > 60 ? PersonType.RETIREE : PersonType.DEFAULT;
-            }
-            default -> {
-                return PersonType.DEFAULT;
-            }
+    private PersonType calculatePersonType(Gender gender, int age) {
+        if (gender == null) {
+            return PersonType.DEFAULT;
         }
-
+        return switch (gender) {
+            case MALE -> age > 65 ? PersonType.RETIREE : PersonType.DEFAULT;
+            case FEMALE -> age > 60 ? PersonType.RETIREE : PersonType.DEFAULT;
+        };
     }
 
     /**
@@ -86,7 +81,9 @@ public class User {
      */
     public Order createOrder(ArrayList<Medicine> medicines){
         if(Objects.nonNull(medicines)) {
-            List<Medicine> legalMedicines = medicines.stream().filter(medicine -> !medicine.isNeedRecipe() || this.recipes.contains(new Recipe(this, medicine))).toList();
+            List<Medicine> legalMedicines = medicines.stream()
+                    .filter(medicine -> !medicine.isNeedRecipe() || this.recipes.contains(new Recipe(this, medicine)))
+                    .toList();
             Order order = new Order(legalMedicines, this);
             OrdersHistory.addOrder(order);
             log.debug("Created new Order for User: name={}, surName={}, number of medicines={}",
@@ -106,13 +103,25 @@ public class User {
      * @param order The order to be paid.
      */
     public void payOrder(Order order) {
-        if (Objects.nonNull(order)) {
+            if (order == null) {
+                log.error("Attempted to pay for a null order.");
+                throw new IllegalArgumentException("Order cannot be null.");
+            }
             double priceWithDiscount = DiscountUtils.getPriceWithDiscount(order, this);
+            if (priceWithDiscount < 0) {
+                log.error("Invalid price for order: {}", order);
+                throw new IllegalArgumentException("Invalid price for order.");
+            }
+
+            if (money.compareTo(priceWithDiscount) < 0) {
+                log.error("User does not have enough money to pay for the order: name={}, surName={}, required={}, available={}",
+                        name, surName, priceWithDiscount, money);
+                throw new IllegalStateException("Not enough money to pay for the order.");
+            }
             money -= priceWithDiscount;
             log.debug("User paid for Order: name={}, surName={}, amount paid={}, remaining money={}",
                     name, surName, priceWithDiscount, money);
         }
-    }
 
     public double getMoney() {
         log.debug("Getting money for User: name={}, surName={}, money={}", name, surName, money);
