@@ -1,5 +1,6 @@
 package domain.Medicine;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -19,7 +20,7 @@ public class Pills extends Medicine{
      * @param activeSubstance       The active substance in the pills.
      * @param numberPillsInPackage  The number of pills per pack.
      */
-    public Pills(String name, Double price, Boolean needRecipe, String activeSubstance, Integer numberPillsInPackage) {
+    public Pills(String name, BigDecimal price, Boolean needRecipe, String activeSubstance, Integer numberPillsInPackage) {
         super(name, price, needRecipe, activeSubstance);
         this.numberPillsInPackage = numberPillsInPackage;
     }

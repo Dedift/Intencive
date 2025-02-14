@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -20,13 +21,13 @@ class OrdersHistoryTest {
 
     @BeforeEach
     void setUp() {
-        Pills pills = new Pills("Aspirin", 10.80, false, "acetylsalicylic acid", 20);
-        Cream cream = new Cream("Diclofenac", 5.23, true, "diclofenac", 100);
-        Powder powder = new Powder("TheraFlu", 20.4, false, "paracetamol", 10);
-        Drops drops = new Drops("Artelac Splash", 31.43, false, "sodium hyaluronate", 10);
+        Pills pills = new Pills("Aspirin", new BigDecimal("10.80"), false, "acetylsalicylic acid", 20);
+        Cream cream = new Cream("Diclofenac", new BigDecimal("5.23"), true, "diclofenac", 100);
+        Powder powder = new Powder("TheraFlu", new BigDecimal("20.4"), false, "paracetamol", 10);
+        Drops drops = new Drops("Artelac Splash", new BigDecimal("31.43"), false, "sodium hyaluronate", 10);
 
-        User firstUser = new User(new ArrayList<>(), null, "Lu", "Zhvanskaya", 29, null, Gender.FEMALE, 300.2);
-        User secondUser = new User(new ArrayList<>(), null, "Alina", "Plush", 19, PersonType.DEFAULT, Gender.FEMALE, 300.2);
+        User firstUser = new User(new ArrayList<>(), null, "Lu", "Zhvanskaya", 29, null, Gender.FEMALE, new BigDecimal("300.2"));
+        User secondUser = new User(new ArrayList<>(), null, "Alina", "Plush", 19, PersonType.DEFAULT, Gender.FEMALE, new BigDecimal("300.2"));
         firstUser.setRecipes(new ArrayList<>() {{
             add(new Recipe(firstUser, cream));
         }});

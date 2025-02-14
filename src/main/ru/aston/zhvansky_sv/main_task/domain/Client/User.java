@@ -7,6 +7,8 @@ import domain.Medicine.Medicine;
 import domain.Utils.DiscountUtils;
 import domain.Utils.OrdersHistory;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +27,7 @@ public class User {
     private Integer age;
     private PersonType personType;
     private Gender gender;
-    private Double money;
+    private BigDecimal money;
 
     /**
      * Constructs a new User instance.
@@ -39,7 +41,7 @@ public class User {
      * @param gender        The gender of the user.
      * @param money         The amount of money the user has.
      */
-    public User(List<Recipe> recipes, Order order, String name, String surName, Integer age, PersonType personType, Gender gender, Double money) {
+    public User(List<Recipe> recipes, Order order, String name, String surName, Integer age, PersonType personType, Gender gender, BigDecimal money) {
         this.recipes = recipes;
         this.order = order;
         this.name = name;
@@ -107,8 +109,8 @@ public class User {
                 log.error("Attempted to pay for a null order.");
                 throw new IllegalArgumentException("Order cannot be null.");
             }
-            double priceWithDiscount = DiscountUtils.getPriceWithDiscount(order, this);
-            if (priceWithDiscount < 0) {
+            BigDecimal priceWithDiscount = DiscountUtils.getPriceWithDiscount(order, this);
+            if (priceWithDiscount.compareTo(BigDecimal.ZERO) < 0) {
                 log.error("Invalid price for order: {}", order);
                 throw new IllegalArgumentException("Invalid price for order.");
             }
@@ -118,17 +120,17 @@ public class User {
                         name, surName, priceWithDiscount, money);
                 throw new IllegalStateException("Not enough money to pay for the order.");
             }
-            money -= priceWithDiscount;
+            money = money.subtract(priceWithDiscount);
             log.debug("User paid for Order: name={}, surName={}, amount paid={}, remaining money={}",
                     name, surName, priceWithDiscount, money);
         }
 
-    public double getMoney() {
+    public BigDecimal getMoney() {
         log.debug("Getting money for User: name={}, surName={}, money={}", name, surName, money);
         return money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(BigDecimal money) {
         log.debug("Setting money for User: name={}, surName={}, old money={}, new money={}",
                 name, surName, this.money, money);
         this.money = money;
@@ -219,7 +221,7 @@ public class User {
             log.debug("Comparing User with a different type: false");
             return false;
         }
-        boolean isEqual = age == user.age && Double.compare(money, user.money) == 0 &&
+        boolean isEqual = Objects.equals(age, user.age) && Objects.equals(money, user.money) &&
                 Objects.equals(recipes, user.recipes) && Objects.equals(order, user.order) &&
                 Objects.equals(name, user.name) && Objects.equals(surName, user.surName) &&
                 personType == user.personType && gender == user.gender;

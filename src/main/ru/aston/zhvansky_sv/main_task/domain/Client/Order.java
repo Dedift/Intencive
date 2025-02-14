@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import domain.Medicine.Medicine;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Represents an order made by a user.
@@ -35,19 +37,19 @@ public class Order {
      *
      * @return The total price of the medicines in the order.
      */
-    public double getPriceOfPills() {
+    public BigDecimal getPriceOfPills() {
         if (medicines == null) {
             log.debug("Medicines list is null, returning 0.0");
-            return 0.0;
+            return BigDecimal.ZERO;
         }
 
-        double sum = medicines.stream()
-                .mapToDouble(Medicine::getPrice)
+        Optional<BigDecimal> sum = medicines.stream()
+                .map(Medicine::getPrice)
                 .peek(price -> log.debug("Processing medicine with price: {}", price))
-                .sum();
+                        .reduce(BigDecimal::add);
 
         log.debug("Calculated total price of medicines in order: {}", sum);
-        return sum;
+        return sum.orElse(BigDecimal.ZERO);
     }
 
     public User getUser() {

@@ -1,5 +1,6 @@
 package domain.Medicine;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -19,7 +20,7 @@ public class Cream extends Medicine{
      * @param activeSubstance The active substance in the cream.
      * @param volume          The volume of the cream in milliliters (ml).
      */
-    public Cream(String name, Double price, Boolean needRecipe, String activeSubstance, Integer volume) {
+    public Cream(String name, BigDecimal price, Boolean needRecipe, String activeSubstance, Integer volume) {
         super(name, price, needRecipe, activeSubstance);
         this.volume = volume;
         log.debug("Created new Cream: name={}, price={}, needRecipe={}, activeSubstance={}, volume={}",

@@ -3,6 +3,7 @@ package domain.Medicine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -14,7 +15,7 @@ public abstract class Medicine {
 
     protected static final Logger log = LoggerFactory.getLogger(Medicine.class);
     protected String name;
-    protected Double price;
+    protected BigDecimal price;
     protected Boolean needRecipe;
     protected String activeSubstance;
 
@@ -26,7 +27,7 @@ public abstract class Medicine {
      * @param needRecipe      Indicates whether a prescription is required for this medicine.
      * @param activeSubstance The active substance in the medicine.
      */
-    public Medicine(String name, Double price, Boolean needRecipe, String activeSubstance) {
+    public Medicine(String name, BigDecimal price, Boolean needRecipe, String activeSubstance) {
         this.name = name;
         this.price = price;
         this.needRecipe = needRecipe;
@@ -45,12 +46,12 @@ public abstract class Medicine {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         log.debug("Getting price of medicine: {}", price);
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         log.debug("Setting price of medicine. Old price: {}, New price: {}", this.price, price);
         this.price = price;
     }
@@ -87,7 +88,7 @@ public abstract class Medicine {
             log.debug("Comparing Medicine with a different type: false");
             return false;
         }
-        boolean isEqual = Double.compare(price, medicine.price) == 0 && needRecipe == medicine.needRecipe && Objects.equals(name, medicine.name) && Objects.equals(activeSubstance, medicine.activeSubstance);
+        boolean isEqual = Objects.equals(price, medicine.price) && needRecipe == medicine.needRecipe && Objects.equals(name, medicine.name) && Objects.equals(activeSubstance, medicine.activeSubstance);
         log.debug("Comparing Medicine with another Medicine. Result: {}", isEqual);
         return isEqual;
     }

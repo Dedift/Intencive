@@ -3,6 +3,7 @@ package domain.Medicine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -23,7 +24,7 @@ public class Powder extends Medicine{
      * @param activeSubstance           The active substance in the powder.
      * @param numberSachetsInPackage    The number of sachets per pack.
      */
-    public Powder(String name, Double price, Boolean needRecipe, String activeSubstance, Integer numberSachetsInPackage) {
+    public Powder(String name, BigDecimal price, Boolean needRecipe, String activeSubstance, Integer numberSachetsInPackage) {
         super(name, price, needRecipe, activeSubstance);
         this.numberSachetsInPackage = numberSachetsInPackage;
     }

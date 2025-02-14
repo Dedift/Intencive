@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import domain.Client.Order;
 import domain.Client.User;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
@@ -24,7 +26,7 @@ public final class DiscountUtils {
     /**
      * A constant for calculating percentages.
      */
-    public static final int ONE_HUNDRED = 100;
+    public static final BigDecimal ONE_HUNDRED = BigDecimal.valueOf(100);
 
     /**
      * Private constructor to prevent instantiation of the class.
@@ -41,30 +43,30 @@ public final class DiscountUtils {
      * @param user  The user who places the order.
      * @return The total price of the order, including the discount. Returns -1 if the input data is incorrect.
      */
-    public static double getPriceWithDiscount(Order order, User user) {
+    public static BigDecimal getPriceWithDiscount(Order order, User user) {
         logger.debug("Calculating discount for order: {}, user: {}", order, user);
         if (Objects.isNull(order) || Objects.isNull(user) || order.getMedicines().isEmpty()) {
             logger.warn("Invalid input: order or user is null, or order has no medicines");
-            return -1;
+            return BigDecimal.ONE.negate();
         }
         int countPills = order.getMedicines().size();
-        double priceOfPills = order.getPriceOfPills();
+        BigDecimal priceOfPills = order.getPriceOfPills();
         logger.debug("Count of pills: {}, Price of pills: {}", countPills, priceOfPills);
-        if (priceOfPills == 0) {
+        if (priceOfPills.compareTo(BigDecimal.ZERO) == 0) {
             logger.warn("Invalid price of pills: {}", priceOfPills);
-            return -1;
+            return BigDecimal.ONE.negate();
         }
-        double discount = calculateDiscount(countPills, user);
+        BigDecimal discount = calculateDiscount(countPills, user);
         logger.debug("Total discount: {}", discount);
-        double finalPrice = priceOfPills * discount / ONE_HUNDRED;
+        BigDecimal finalPrice = (priceOfPills.multiply(discount)).divide(ONE_HUNDRED, RoundingMode.HALF_EVEN);
         logger.info("Final price with discount: {}", finalPrice);
         return finalPrice;
     }
 
-    private static double calculateDiscount(int countPills, User user) {
-        double discount = Math.min(countPills, MAX_COUNT_MEDICINE_FOR_SALE);
+    private static BigDecimal calculateDiscount(int countPills, User user) {
+        BigDecimal discount = BigDecimal.valueOf(Math.min(countPills, MAX_COUNT_MEDICINE_FOR_SALE));
         logger.debug("Initial discount: {}", discount);
-        discount += user.getPersonType().ADDITIONAL_DISCOUNT;
+        discount = discount.add(user.getPersonType().ADDITIONAL_DISCOUNT);
         logger.debug("Additional discount applied. New discount: {}", discount);
         return discount;
     }

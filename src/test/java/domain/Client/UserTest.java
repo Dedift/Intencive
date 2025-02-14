@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 class UserTest {
@@ -21,11 +22,11 @@ class UserTest {
 
     @BeforeEach
     void setUp() {
-        this.pills = new Pills("Aspirin", 10.80, false, "acetylsalicylic acid", 20);
-        this.cream = new Cream("Diclofenac", 5.23, true, "diclofenac", 100);
-        this.powder = new Powder("TheraFlu", 20.4, true, "paracetamol", 10);
-        this.drops = new Drops("Artelac Splash", 31.43, false, "sodium hyaluronate", 10);
-        this.user = new User(new ArrayList<>(), null, "Lu", "Zhvanskaya", 29, null, Gender.FEMALE, 300.2);
+        this.pills = new Pills("Aspirin", new BigDecimal("10.80"), false, "acetylsalicylic acid", 20);
+        this.cream = new Cream("Diclofenac", new BigDecimal("5.23"), true, "diclofenac", 100);
+        this.powder = new Powder("TheraFlu", new BigDecimal("20.4"), true, "paracetamol", 10);
+        this.drops = new Drops("Artelac Splash", new BigDecimal("31.43"), false, "sodium hyaluronate", 10);
+        this.user = new User(new ArrayList<>(), null, "Lu", "Zhvanskaya", 29, null, Gender.FEMALE, new BigDecimal("300.2"));
         user.setRecipes(new ArrayList<>() {{
             add(new Recipe(user, cream));
         }});
@@ -55,8 +56,8 @@ class UserTest {
             add(powder);
             add(drops);
         }});
-        double priceWithDiscount = DiscountUtils.getPriceWithDiscount(order1, this.user);
-        double expectedBalanceMoney = this.user.getMoney() - priceWithDiscount;
+        BigDecimal priceWithDiscount = DiscountUtils.getPriceWithDiscount(order1, this.user);
+        BigDecimal expectedBalanceMoney = this.user.getMoney().subtract(priceWithDiscount);
         user.payOrder(order1);
         Assertions.assertEquals(expectedBalanceMoney, this.user.getMoney());
     }

@@ -1,26 +1,28 @@
 package domain.Client;
 
+import java.math.BigDecimal;
+
 /**
  * Represents the type of user, which determines additional discounts they may receive.
  * Each person type has an associated additional discount value.
  */
 public enum PersonType {
-    RETIREE(5),
-    DISABLED(5),
-    VETERAN(5),
-    DEFAULT(0);
+    RETIREE(new BigDecimal("5")),
+    DISABLED(new BigDecimal("5")),
+    VETERAN(new BigDecimal("5")),
+    DEFAULT(new BigDecimal("0"));
 
     /**
      * The additional discount percentage associated with the person type.
      */
-    public final int ADDITIONAL_DISCOUNT;
+    public final BigDecimal ADDITIONAL_DISCOUNT;
 
     /**
      * Constructs a PersonType enum with the specified additional discount.
      *
      * @param additionalDiscount The additional discount percentage.
      */
-    PersonType(int additionalDiscount) {
+    PersonType(BigDecimal additionalDiscount) {
         ADDITIONAL_DISCOUNT = additionalDiscount;
     }
 }
