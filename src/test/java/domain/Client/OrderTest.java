@@ -4,6 +4,7 @@ import domain.Medicine.Cream;
 import domain.Medicine.Drops;
 import domain.Medicine.Pills;
 import domain.Medicine.Powder;
+import domain.Utils.FinancialUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,17 +32,17 @@ class OrderTest {
             add(new Recipe(user, cream));
         }});
 
-        this.order = user.createOrder(new ArrayList<>() {{
+        this.order = FinancialUtils.createOrder(new ArrayList<>() {{
             add(pills);
             add(cream);
             add(powder);
             add(drops);
-        }});
+        }}, user);
     }
 
     @Test
-    void getPriceOfPills() {
+    void getPriceOfMedicines() {
         BigDecimal expectedPrice = pills.getPrice().add(cream.getPrice()).add(powder.getPrice()).add(drops.getPrice());
-        Assertions.assertEquals(expectedPrice, order.getPriceOfPills());
+        Assertions.assertEquals(expectedPrice, order.getPriceOfMedicines());
     }
 }

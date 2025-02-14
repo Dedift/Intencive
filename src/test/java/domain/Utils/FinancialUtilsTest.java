@@ -1,19 +1,21 @@
-package domain.Client;
+package domain.Utils;
 
+import domain.Client.*;
 import domain.Medicine.Cream;
 import domain.Medicine.Drops;
 import domain.Medicine.Pills;
 import domain.Medicine.Powder;
-import domain.Utils.DiscountUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
-class UserTest {
+class FinancialUtilsTest {
 
+    Order order;
     Pills pills;
     Cream cream;
     Powder powder;
@@ -26,20 +28,28 @@ class UserTest {
         this.cream = new Cream("Diclofenac", new BigDecimal("5.23"), true, "diclofenac", 100);
         this.powder = new Powder("TheraFlu", new BigDecimal("20.4"), true, "paracetamol", 10);
         this.drops = new Drops("Artelac Splash", new BigDecimal("31.43"), false, "sodium hyaluronate", 10);
+
         this.user = new User(new ArrayList<>(), null, "Lu", "Zhvanskaya", 29, null, Gender.FEMALE, new BigDecimal("300.2"));
         user.setRecipes(new ArrayList<>() {{
             add(new Recipe(user, cream));
         }});
-    }
 
-    @Test
-    void createOrder() {
-        Order order1 = user.createOrder(new ArrayList<>() {{
+        this.order = FinancialUtils.createOrder(new ArrayList<>() {{
             add(pills);
             add(cream);
             add(powder);
             add(drops);
-        }});
+        }}, user);
+    }
+
+    @Test
+    void createOrder() {
+        Order order1 = FinancialUtils.createOrder(new ArrayList<>() {{
+            add(pills);
+            add(cream);
+            add(powder);
+            add(drops);
+        }}, this.user);
         Order order2 = new Order((new ArrayList<>() {{
             add(pills);
             add(cream);
@@ -50,15 +60,18 @@ class UserTest {
 
     @Test
     void payOrder() {
-        Order order1 = user.createOrder(new ArrayList<>() {{
+        Order order1 = FinancialUtils.createOrder(new ArrayList<>() {{
             add(pills);
             add(cream);
             add(powder);
             add(drops);
-        }});
-        BigDecimal priceWithDiscount = DiscountUtils.getPriceWithDiscount(order1, this.user);
+        }}, this.user);
+        BigDecimal priceOfPills = order1.getPriceOfMedicines();
+        BigDecimal countMedicine = BigDecimal.valueOf(order1.getMedicines().size());
+        BigDecimal discount = user.getPersonType().ADDITIONAL_DISCOUNT.add(countMedicine);
+        BigDecimal priceWithDiscount = (priceOfPills.multiply(discount)).divide(FinancialUtils.ONE_HUNDRED, RoundingMode.HALF_EVEN);
         BigDecimal expectedBalanceMoney = this.user.getMoney().subtract(priceWithDiscount);
-        user.payOrder(order1);
+        FinancialUtils.payOrder(order1, this.user);
         Assertions.assertEquals(expectedBalanceMoney, this.user.getMoney());
     }
 }

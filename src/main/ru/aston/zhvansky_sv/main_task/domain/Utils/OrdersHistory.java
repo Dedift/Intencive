@@ -15,7 +15,7 @@ import java.util.List;
  */
 public final class OrdersHistory {
 
-    private static final Logger logger = LoggerFactory.getLogger(OrdersHistory.class);
+    private static final Logger log = LoggerFactory.getLogger(OrdersHistory.class);
     private static final List<Order> allOrders = new ArrayList<>();
 
     /**
@@ -33,11 +33,11 @@ public final class OrdersHistory {
      */
     public static void addOrder(Order order) {
         if (order == null) {
-            logger.warn("Attempted to add a null order to the history.");
+            log.warn("Attempted to add a null order to the history.");
             return;
         }
         allOrders.add(order);
-        logger.info("Order added to history: {}", order);
+        log.info("Order added to history: {}", order);
     }
 
     /**
@@ -47,12 +47,12 @@ public final class OrdersHistory {
      * @return A sorted list of orders by user surname.
      */
     public static List<Order> getSortedOrders() {
-        logger.debug("Sorting orders by user surname.");
+        log.debug("Sorting orders by user surname.");
         return allOrders.stream()
                 .sorted(Comparator.comparing(
                         o -> o.getUser().getSurName()
                 ))
-                .peek(order -> logger.debug("Processed order: {}", order))
+                .peek(order -> log.debug("Processed order: {}", order))
                 .toList();
     }
 
@@ -62,7 +62,7 @@ public final class OrdersHistory {
      * @return A list of all orders.
      */
     public static List<Order> getAllOrders() {
-        logger.info("Returning all orders. Total orders: {}", allOrders.size());
+        log.info("Returning all orders. Total orders: {}", allOrders.size());
         return allOrders;
     }
 }

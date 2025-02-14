@@ -3,12 +3,7 @@ package domain.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import domain.Medicine.Medicine;
-import domain.Utils.DiscountUtils;
-import domain.Utils.OrdersHistory;
-
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -74,56 +69,6 @@ public class User {
             case FEMALE -> age > 60 ? PersonType.RETIREE : PersonType.DEFAULT;
         };
     }
-
-    /**
-     * Creates a new order for the user only with legal medicine.    !!!!!!!!!
-     *
-     * @param medicines The list of medicines to be included in the order.
-     * @return          The created order.
-     */
-    public Order createOrder(ArrayList<Medicine> medicines){
-        if(Objects.nonNull(medicines)) {
-            List<Medicine> legalMedicines = medicines.stream()
-                    .filter(medicine -> !medicine.isNeedRecipe() || this.recipes.contains(new Recipe(this, medicine)))
-                    .toList();
-            Order order = new Order(legalMedicines, this);
-            OrdersHistory.addOrder(order);
-            log.debug("Created new Order for User: name={}, surName={}, number of medicines={}",
-                    name, surName, legalMedicines.size());
-            return order;
-        } else {
-            Order order = new Order(new ArrayList<>(), this);
-            OrdersHistory.addOrder(order);
-            log.debug("Created empty Order for User: name={}, surName={}", name, surName);
-            return order;
-        }
-    }
-
-    /**
-     * Pays for the specified order using the user's money.
-     *
-     * @param order The order to be paid.
-     */
-    public void payOrder(Order order) {
-            if (order == null) {
-                log.error("Attempted to pay for a null order.");
-                throw new IllegalArgumentException("Order cannot be null.");
-            }
-            BigDecimal priceWithDiscount = DiscountUtils.getPriceWithDiscount(order, this);
-            if (priceWithDiscount.compareTo(BigDecimal.ZERO) < 0) {
-                log.error("Invalid price for order: {}", order);
-                throw new IllegalArgumentException("Invalid price for order.");
-            }
-
-            if (money.compareTo(priceWithDiscount) < 0) {
-                log.error("User does not have enough money to pay for the order: name={}, surName={}, required={}, available={}",
-                        name, surName, priceWithDiscount, money);
-                throw new IllegalStateException("Not enough money to pay for the order.");
-            }
-            money = money.subtract(priceWithDiscount);
-            log.debug("User paid for Order: name={}, surName={}, amount paid={}, remaining money={}",
-                    name, surName, priceWithDiscount, money);
-        }
 
     public BigDecimal getMoney() {
         log.debug("Getting money for User: name={}, surName={}, money={}", name, surName, money);

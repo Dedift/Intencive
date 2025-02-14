@@ -37,7 +37,7 @@ public class Order {
      *
      * @return The total price of the medicines in the order.
      */
-    public BigDecimal getPriceOfPills() {
+    public BigDecimal getPriceOfMedicines() {
         if (medicines == null) {
             log.debug("Medicines list is null, returning 0.0");
             return BigDecimal.ZERO;
