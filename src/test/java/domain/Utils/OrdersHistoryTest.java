@@ -35,24 +35,23 @@ class OrdersHistoryTest {
             add(new Recipe(secondUser, cream));
         }});
 
-        this.firstOrder = firstUser.createOrder(new ArrayList<>() {{
+        this.firstOrder = FinancialUtils.createOrder(new ArrayList<>() {{
             add(pills);
             add(cream);
             add(powder);
             add(drops);
-        }});
+        }}, firstUser);
 
-        this.secondOrder = secondUser.createOrder(new ArrayList<>() {{
+        this.secondOrder = FinancialUtils.createOrder(new ArrayList<>() {{
             add(pills);
             add(cream);
             add(powder);
             add(drops);
-        }});
+        }}, secondUser);
     }
 
     @Test
     void getSortedOrders() {
-
         ArrayList<Order> ordersForSort = new ArrayList<>() {{
             add(firstOrder);
             add(secondOrder);
