@@ -40,14 +40,14 @@ class OrdersHistoryTest {
             add(cream);
             add(powder);
             add(drops);
-        }}, firstUser);
+        }}, firstUser).get();
 
         this.secondOrder = FinancialUtils.createOrder(new ArrayList<>() {{
             add(pills);
             add(cream);
             add(powder);
             add(drops);
-        }}, secondUser);
+        }}, secondUser).get();
     }
 
     @Test

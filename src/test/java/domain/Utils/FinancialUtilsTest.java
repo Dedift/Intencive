@@ -39,7 +39,7 @@ class FinancialUtilsTest {
             add(cream);
             add(powder);
             add(drops);
-        }}, user);
+        }}, user).get();
     }
 
     @Test
@@ -49,7 +49,7 @@ class FinancialUtilsTest {
             add(cream);
             add(powder);
             add(drops);
-        }}, this.user);
+        }}, this.user).get();
         Order order2 = new Order((new ArrayList<>() {{
             add(pills);
             add(cream);
@@ -65,7 +65,7 @@ class FinancialUtilsTest {
             add(cream);
             add(powder);
             add(drops);
-        }}, this.user);
+        }}, this.user).get();
         BigDecimal priceOfPills = order1.getPriceOfMedicines();
         BigDecimal countMedicine = BigDecimal.valueOf(order1.getMedicines().size());
         BigDecimal discount = user.getPersonType().ADDITIONAL_DISCOUNT.add(countMedicine);
