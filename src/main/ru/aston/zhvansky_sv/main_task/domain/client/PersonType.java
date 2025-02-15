@@ -1,4 +1,4 @@
-package domain.Client;
+package domain.client;
 
 import java.math.BigDecimal;
 

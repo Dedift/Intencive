@@ -1,10 +1,10 @@
-package domain.Client;
+package domain.client;
 
-import domain.Medicine.Cream;
-import domain.Medicine.Drops;
-import domain.Medicine.Pills;
-import domain.Medicine.Powder;
-import domain.Utils.FinancialUtils;
+import domain.medicine.Cream;
+import domain.medicine.Drops;
+import domain.medicine.Pills;
+import domain.medicine.Powder;
+import domain.utils.FinancialUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

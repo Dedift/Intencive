@@ -1,4 +1,4 @@
-package domain.Medicine;
+package domain.medicine;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

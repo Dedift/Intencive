@@ -1,11 +1,11 @@
-package domain.Client;
+package domain.client;
 
 import domain.exceptions.ExceptionHandler;
 import domain.exceptions.NullValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import domain.Medicine.Medicine;
+import domain.medicine.Medicine;
 
 import java.math.BigDecimal;
 import java.util.List;

@@ -1,9 +1,9 @@
-package domain.Client;
+package domain.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import domain.Medicine.Medicine;
+import domain.medicine.Medicine;
 
 import java.util.Objects;
 

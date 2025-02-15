@@ -1,15 +1,15 @@
-package domain.Utils;
+package domain.utils;
 
-import domain.Client.Recipe;
-import domain.Medicine.Medicine;
+import domain.client.Recipe;
+import domain.medicine.Medicine;
 import domain.exceptions.ExceptionHandler;
 import domain.exceptions.IllegalOperationException;
 import domain.exceptions.NullValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import domain.Client.Order;
-import domain.Client.User;
+import domain.client.Order;
+import domain.client.User;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

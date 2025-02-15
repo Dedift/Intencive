@@ -1,4 +1,4 @@
-package domain.Client;
+package domain.client;
 
 /**
  * Represents the gender of a user.

@@ -1,9 +1,9 @@
-package domain.Utils;
+package domain.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import domain.Client.Order;
+import domain.client.Order;
 
 import java.util.ArrayList;
 import java.util.Comparator;
