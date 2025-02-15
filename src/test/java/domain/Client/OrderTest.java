@@ -37,7 +37,7 @@ class OrderTest {
             add(cream);
             add(powder);
             add(drops);
-        }}, user);
+        }}, user).get();
     }
 
     @Test

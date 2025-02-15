@@ -1,5 +1,7 @@
 package domain.Client;
 
+import domain.exceptions.ExceptionHandler;
+import domain.exceptions.NullValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,7 +10,6 @@ import domain.Medicine.Medicine;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Represents an order made by a user.
@@ -38,18 +39,25 @@ public class Order {
      * @return The total price of the medicines in the order.
      */
     public BigDecimal getPriceOfMedicines() {
-        if (medicines == null) {
-            log.debug("Medicines list is null, returning 0.0");
+        try {
+            if (Objects.isNull(medicines)) {
+                throw new NullValueException("Medicines list is null");
+            }
+
+            BigDecimal sum = medicines.stream()
+                    .map(Medicine::getPrice)
+                    .peek(price -> log.debug("Processing medicine with price: {}", price))
+                    .reduce(BigDecimal::add)
+                    .orElseThrow(() -> new NullValueException("Price is null"));
+
+            log.debug("Calculated total price of medicines in order: {}", sum);
+            return sum;
+
+        } catch (Exception exception) {
+            log.debug("Medicines list or price is null, returning 0.0");
+            ExceptionHandler.handleException(exception);
             return BigDecimal.ZERO;
         }
-
-        Optional<BigDecimal> sum = medicines.stream()
-                .map(Medicine::getPrice)
-                .peek(price -> log.debug("Processing medicine with price: {}", price))
-                        .reduce(BigDecimal::add);
-
-        log.debug("Calculated total price of medicines in order: {}", sum);
-        return sum.orElse(BigDecimal.ZERO);
     }
 
     public User getUser() {
